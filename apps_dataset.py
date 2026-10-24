@@ -44,3 +44,8 @@ def load_samples() -> list[AppsSample]:
             )
 
     return apps_samples
+
+
+if __name__ == "__main__":
+    samples = load_samples()
+    print(len(samples))
