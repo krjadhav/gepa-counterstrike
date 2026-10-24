@@ -2,7 +2,7 @@
 
 There's emperical evidence that AI models can engage in "scheming" (=misaligned power-seeking. perhaps strategically pursuing some long-term goal that goes against our interests). Such models could use tactics such as faking alignment, acting incompetent, sabotaging work,
 
-## Could we intercept these efforts? How can we handle risk from scheming?
+**Could we intercept these efforts? How can we handle risk from scheming?**
 
 one approach is to use probability theory. essentially,
 
@@ -14,7 +14,7 @@ By focussing on `P(doom | scheming)`, we can probably be okay even if the model 
 
 This idea is very similar to how orgs handle insider threats. Instead of just focussing on never hiring anyone who is compromised, assume employees could be compromised and set policies to mitigate the risks.
 
-## What are some control techniques?
+**What are some control techniques?**
 
 Let’s say you have three types of workers:
 - **untrusted models (U)**: low trust, low cost, high competence
@@ -22,7 +22,7 @@ Let’s say you have three types of workers:
 - **trusted models (T)**: high trust, low cost, low to moderate competence
 
 
-### 1/ Trusted Monitoring:
+**1/ Trusted Monitoring:**
 
 ```text
 fn solve(problem):
@@ -38,7 +38,7 @@ First, ask the stronger, untrusted model to write code. Then ask the weaker trus
 
 Problem with this strategy is that weaker model tends to miss smart attacks.
 
-### 2/ Trusted Monitoring with Fallback:
+**2/ Trusted Monitoring with Fallback:**
 
 Using the trusted monitoring strategy
 
@@ -48,7 +48,7 @@ Using the trusted monitoring strategy
 
 The tradeoff here is you sacrifice answer quality on the fraction of tasks a weaker model takes up. However, it drastically reduces danger.
 
-### 3/ Untrusted Monitoring with Collusion Busting
+**3/ Untrusted Monitoring with Collusion Busting**
 
 You can ask another copy of the untrusted stronger model to review the answer. The problem with this strategy is it's possible for them to coordinate and lie.
 
