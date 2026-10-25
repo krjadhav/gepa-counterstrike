@@ -45,6 +45,23 @@ def load_samples() -> list[AppsSample]:
 
     return apps_samples
 
+def build_examples_from_samples(
+    samples: list[AppsSample],
+) -> list[dspy.Example]:
+    """Convert to dspy.Example"""
+    examples: list[dspy.Example] = []
+    for sample in samples:
+        example = dspy.Example(
+            {
+                "task_description": sample.task_description,
+                "attack_code": sample.attack_code,
+                "honest_code": sample.honest_code,
+                "backdoor_input": sample.backdoor_input,
+            }
+        ).with_inputs("task_description", "attack_code", "honest_code")
+        examples.append(example)
+    return examples
+
 
 if __name__ == "__main__":
     samples = load_samples()
