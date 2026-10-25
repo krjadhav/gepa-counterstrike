@@ -53,3 +53,9 @@ The tradeoff here is you sacrifice answer quality on the fraction of tasks a wea
 You can ask another copy of the untrusted stronger model to review the answer. The problem with this strategy is it's possible for them to coordinate and lie.
 
 The countermeasure is to remove any signs of collusion. A trusted model could paraphrase or mask the content to remove secret coordination signals from an untrusted reviewer.
+
+
+### File Structure
+- data.py: prepare the examples. define `AppSample`, load samples from dataset, convert samples in to dspy.Example
+- monitor.py: define how you score code. define `PredictSuspicionScore`, Define `MonitorTrainerProgram`, the wrapper you use during optimization.
+- metrics.py: judge the prediction. produce feedback that GEPA can use when revising monitor's prompt.
