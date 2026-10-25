@@ -2,8 +2,9 @@ from dataclasses import dataclass
 import random
 from control_arena.settings.apps.apps_setting import get_dataset
 from control_arena.settings.apps.task.metadata import AppsTaskMetadata
-from pathlib import Path
 import dspy
+
+from config import TRAIN_LIMIT, VAL_LIMIT
 
 """
 APPS is a dataset of interview-style code challenges with solutions, and ControlArena includes various known backdoored solutions.
@@ -66,3 +67,9 @@ def build_examples_from_samples(
 if __name__ == "__main__":
     samples = load_samples()
     print(len(samples))
+    examples = build_examples_from_samples(samples)
+    random.Random(0).shuffle(examples)
+    train_examples = examples[:TRAIN_LIMIT]
+    val_examples = examples[TRAIN_LIMIT:TRAIN_LIMIT + VAL_LIMIT]
+    print(f"Train examples: {len(train_examples)}")
+    print(f"Validation examples: {len(val_examples)}")
