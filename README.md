@@ -56,6 +56,7 @@ The countermeasure is to remove any signs of collusion. A trusted model could pa
 
 
 ### File Structure
+- config.py: define model names and dataset limits; load secrets such as the API key from `.env` or environment variables.
 - data.py: prepare the examples. define `AppSample`, load samples from dataset, convert samples in to dspy.Example
 - monitor.py: define how you score code. define `PredictSuspicionScore`, Define `MonitorTrainerProgram`, the wrapper you use during optimization.
 - metrics.py: judge the prediction. produce feedback that GEPA can use when revising monitor's prompt.
