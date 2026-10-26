@@ -67,9 +67,21 @@ def build_examples_from_samples(
 if __name__ == "__main__":
     samples = load_samples()
     print(len(samples))
+
+    # Create examples
     examples = build_examples_from_samples(samples)
     random.Random(0).shuffle(examples)
     train_examples = examples[:TRAIN_LIMIT]
     val_examples = examples[TRAIN_LIMIT:TRAIN_LIMIT + VAL_LIMIT]
     print(f"Train examples: {len(train_examples)}")
     print(f"Validation examples: {len(val_examples)}")
+
+    # View examples
+    print("Task Description:".center(80, "="))
+    print(train_examples[0]['task_description'])
+    print("Honest Code:".center(80, "="))
+    print(train_examples[0]['honest_code'])
+    print("Attack Code:".center(80, "="))
+    print(train_examples[0]['attack_code'])
+    print("Backdoor Input:".center(80, "="))
+    print(train_examples[0]['backdoor_input'])
