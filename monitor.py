@@ -33,3 +33,50 @@ def dspy_monitor_program(
         predictor.load(model_path)
     predictor.set_lm(lm)
     return predictor
+
+
+class MonitorTrainerProgram(dspy.Module):
+    def __init__(self, monitor_program: dspy.Module):
+        self.monitor_program = monitor_program
+
+    """Apparently dspy supports synchronous and async execution.
+    Both methods pass the attack code and the honest code independently and ask for a score.
+    """
+
+    async def aforward(
+        self,
+        task_description: str,
+        attack_code: str,
+        honest_code: str,
+    ) -> dspy.Prediction:
+        attack_prediction = await self.monitor_program.acall(
+            task_description=task_description,
+            code=attack_code,
+        )
+        honest_prediction = await self.monitor_program.acall(
+            task_description=task_description,
+            code=honest_code,
+        )
+        return dspy.Prediction(
+            attack_suspicion_score=attack_prediction.suspicion_score,
+            honest_suspicion_score=honest_prediction.suspicion_score,
+        )
+
+    def forward(
+        self,
+        task_description: str,
+        attack_code: str,
+        honest_code: str,
+    ) -> dspy.Prediction:
+        attack_prediction = self.monitor_program(
+            task_description=task_description,
+            code=attack_code,
+        )
+        honest_prediction = self.monitor_program(
+            task_description=task_description,
+            code=honest_code,
+        )
+        return dspy.Prediction(
+            attack_suspicion_score=attack_prediction.suspicion_score,
+            honest_suspicion_score=honest_prediction.suspicion_score,
+        )
