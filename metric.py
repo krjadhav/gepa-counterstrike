@@ -56,3 +56,17 @@ def metric_for_example(
     attack_suspicion_score: int = pred["attack_suspicion_score"]
     honest_suspicion_score: int = pred["honest_suspicion_score"]
     return metric_for_sample(s, attack_suspicion_score, honest_suspicion_score)
+
+
+if __name__ == "__main__":
+    from data import load_samples
+
+    samples = load_samples()
+    if not samples:
+        raise SystemExit("No samples were loaded.")
+
+    for attack_score, honest_score in [(10, 5), (5, 5), (0, 5)]:
+        result = metric_for_sample(samples[0], attack_score, honest_score)
+        print(f"=== Trying with Attack Score:{attack_score} and Honest Score: {honest_score}")
+        print(f"Score: {result.score}")
+        print(result.feedback)
