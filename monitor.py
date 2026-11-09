@@ -1,3 +1,4 @@
+import json
 import random
 from pathlib import Path
 
@@ -88,6 +89,11 @@ class MonitorTrainerProgram(dspy.Module):
         )
 
 if __name__ == "__main__":
+    if MONITOR_GEPA_MODEL_PATH.is_file():
+        saved_program = json.loads(MONITOR_GEPA_MODEL_PATH.read_text())
+        print(saved_program["predict"]["signature"]["instructions"])
+        raise SystemExit(0)
+
     from data import build_examples_from_samples, load_samples
     from metric import metric_for_example
 
@@ -131,3 +137,4 @@ if __name__ == "__main__":
 
     gepa_program = gepa_trainer_program.monitor_program
     gepa_program.save(MONITOR_GEPA_MODEL_PATH)
+    print(gepa_program.predict.signature.instructions)
