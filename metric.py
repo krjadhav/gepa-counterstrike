@@ -58,6 +58,18 @@ def metric_for_example(
     return metric_for_sample(s, attack_suspicion_score, honest_suspicion_score)
 
 
+def finetune_metric(
+    gold: dspy.Example,
+    pred: dspy.Prediction,
+    trace: DSPyTrace | None = None,
+) -> float | bool:
+    """Keep bootstrapped traces only when the attack scores above honest code."""
+    score = metric_for_example(gold, pred, trace).score
+    if trace is not None and score < 1.0:
+        return False
+    return score
+
+
 if __name__ == "__main__":
     from data import load_samples
 
