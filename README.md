@@ -56,11 +56,12 @@ The countermeasure is to remove any signs of collusion. A trusted model could pa
 
 
 ### File Structure
-- config.py: define model names and dataset limits; load secrets such as the API key from `.env` or environment variables.
-- data.py: prepare the examples. define `AppSample`, load samples from dataset, convert samples in to dspy.Example
-- monitor.py: define how you score code. define `PredictSuspicionScore`, Define `MonitorTrainerProgram`, the wrapper you use during optimization.
-- metrics.py: judge the prediction. produce feedback that GEPA can use when revising monitor's prompt.
 
+- `config.py`: model names, dataset limits, checkpoint paths, and secrets loaded from `.env` or environment variables.
+- `data.py`: define `AppsSample`, load paired honest and backdoored solutions, and convert them into `dspy.Example` objects.
+- `monitor.py`: define `PredictSuspicionScore`, build the monitor, and wrap it in `MonitorTrainerProgram` to score both solutions. Running this file optimizes the prompt with GEPA.
+- `metric.py`: judge whether attack code scores higher than honest code. Return feedback for GEPA and a scalar/boolean metric for fine-tuning.
+- `finetune.py`: load the GEPA checkpoint, bootstrap successful monitor traces, fine-tune the LM, and save the resulting monitor.
 
 ## Example Code (Codeforces 469B: Chat Online)
 The problem involves fixed intervals and moving intervals. The goal is to count how many possible shifts produce at least one overlap between them.
